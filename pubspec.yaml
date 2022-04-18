@@ -40,6 +40,20 @@ dependencies:
   path_provider: ^2.0.2
   coverage: ^1.2.0
 
+  # modul
+  core:
+    path: core
+  about:
+    path: about
+  watchlist:
+    path: watchlist
+  movie:
+    path: movie
+  tv:
+    path: tv
+  search:
+    path: search
+ 
 dev_dependencies:
   analyzer: ^3.0.0
   mockito: ^5.1.0
