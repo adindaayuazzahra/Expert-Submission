@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
   TVLocalDataSource,
   DatabaseHelperTv,
 ], customMocks: [
-  MockSpec<http.Client>(as: #MockHttpClientTV)
+  MockSpec<http.Client>(as: #MockHttpClientTV),
+  MockSpec<ApiIOClient>(as: #MockApiIOClient)
 ])
 void main() {}

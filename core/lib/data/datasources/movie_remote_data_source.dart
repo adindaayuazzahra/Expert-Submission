@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:core/core.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 
 abstract class MovieRemoteDataSource {
   Future<List<MovieModel>> getNowPlayingMovies();
@@ -15,7 +15,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
   static const API_KEY = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
   static const BASE_URL = 'https://api.themoviedb.org/3';
 
-  final http.Client client;
+  final ApiIOClient client;
 
   MovieRemoteDataSourceImpl({required this.client});
 

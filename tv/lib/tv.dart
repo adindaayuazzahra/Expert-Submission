@@ -14,7 +14,14 @@ export 'presentation/page/popular_tv_page.dart';
 export 'presentation/page/top_rated_tv_page.dart';
 export 'presentation/page/tv_detail_page.dart';
 //provioder
-export 'presentation/provider/Tv_list_notifier.dart';
-export 'presentation/provider/popular_tv_notifier.dart';
-export 'presentation/provider/top_rated_tv_notifier.dart';
-export 'presentation/provider/tv_detail_notifier.dart';
+// export 'presentation/provider/Tv_list_notifier.dart';
+// export 'presentation/provider/popular_tv_notifier.dart';
+// export 'presentation/provider/top_rated_tv_notifier.dart';
+// export 'presentation/provider/tv_detail_notifier.dart';
+
+//bloc
+export 'presentation/bloc/tv_detail/tv_detail_bloc.dart';
+export 'presentation/bloc/tv_on_the_air/tv_list_bloc.dart';
+export 'presentation/bloc/tv_popular/tv_popular_bloc.dart';
+export 'presentation/bloc/tv_recommendation/tv_recommendation_bloc.dart';
+export 'presentation/bloc/tv_top_rated/tv_top_rated_bloc.dart';

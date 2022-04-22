@@ -5,21 +5,21 @@ import 'package:flutter/material.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
-
-  MovieCard(this.movie);
+  //final bool isWatchlist;
+  final Function() onTap;
+  const MovieCard({
+    Key? key,
+    required this.movie,
+    //required this.isWatchlist,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            MovieDetailPage.ROUTE_NAME,
-            arguments: movie.id,
-          );
-        },
+        onTap: onTap,
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
@@ -33,13 +33,25 @@ class MovieCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // isWatchlist
+                    //     ? Row(
+                    //         children: const [
+                    //           Icon(
+                    //             Icons.movie_outlined,
+                    //             size: 15,
+                    //           ),
+                    //           SizedBox(width: 8),
+                    //           Text('Movies'),
+                    //         ],
+                    //       )
+                    //     : SizedBox(),
                     Text(
                       movie.title ?? '-',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 8),
                     Text(
                       movie.overview ?? '-',
                       maxLines: 2,

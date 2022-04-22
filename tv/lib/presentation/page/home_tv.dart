@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:about/about.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv/tv.dart';
 import 'package:search/search.dart';
 import 'package:movie/movie.dart';
 import 'package:watchlist/watchlist.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeTvPage extends StatefulWidget {
   @override
@@ -17,10 +17,11 @@ class _HomeTvPageState extends State<HomeTvPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => Provider.of<TVListNotifier>(context, listen: false)
-      ..fetchtvOnTheAir()
-      ..fetchPopularTVShows()
-      ..fetchTopRatedTVShows());
+    Future.microtask(() {
+      context.read<TvListBloc>().add(OnTvShowListCalled());
+      context.read<TvPopularBloc>().add(OnTvPopularCalled());
+      context.read<TvTopRatedBloc>().add(OnTvTopRatedCalled());
+    });
   }
 
   @override
@@ -29,7 +30,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
       drawer: Drawer(
         child: Column(
           children: [
-            UserAccountsDrawerHeader(
+            const UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('assets/circle-g.png'),
               ),
@@ -91,17 +92,49 @@ class _HomeTvPageState extends State<HomeTvPage> {
                 'On The Air',
                 style: kHeading6,
               ),
-              Consumer<TVListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.onTheAirState;
-                  if (state == RequestState.Loading) {
+              BlocBuilder<TvListBloc, TvListState>(
+                builder: (context, state) {
+                  if (state is TvListLoading) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (state == RequestState.Loaded) {
-                    return TVList(data.tvOnTheAir);
+                  } else if (state is TvListHasData) {
+                    final listTv = state.result;
+                    return SizedBox(
+                      height: 200,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final tv = listTv[index];
+                          return TVList(
+                            key: Key('ota_$index'),
+                            tv: tv,
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                TVDetailPage.ROUTE_NAME,
+                                arguments: tv.id,
+                              );
+                            },
+                          );
+                        },
+                        itemCount: listTv.length,
+                      ),
+                    );
+                  } else if (state is TvListError) {
+                    return Center(
+                      child: Text(
+                        state.message,
+                        key: Key('error_message'),
+                      ),
+                    );
                   } else {
-                    return Text('Failed');
+                    return Center(
+                      child: Text(
+                        'There are no tv currently showing',
+                        key: Key('empty_message'),
+                      ),
+                    );
                   }
                 },
               ),
@@ -110,35 +143,103 @@ class _HomeTvPageState extends State<HomeTvPage> {
                 onTap: () =>
                     Navigator.pushNamed(context, PopularTVPage.ROUTE_NAME),
               ),
-              Consumer<TVListNotifier>(builder: (context, data, child) {
-                final state = data.popularTVShowsState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return TVList(data.popularTVShows);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              BlocBuilder<TvPopularBloc, TvPopularState>(
+                builder: (context, state) {
+                  if (state is TvPopularLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is TvPopularHasData) {
+                    final listTv = state.result;
+                    return SizedBox(
+                      height: 200,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final tv = listTv[index];
+                          return TVList(
+                            key: Key('popular_$index'),
+                            tv: tv,
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                TVDetailPage.ROUTE_NAME,
+                                arguments: tv.id,
+                              );
+                            },
+                          );
+                        },
+                        itemCount: listTv.length,
+                      ),
+                    );
+                  } else if (state is TvPopularError) {
+                    return Center(
+                      child: Text(
+                        state.message,
+                        key: Key('error_message'),
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: Text(
+                        'There are no tv popular showing',
+                        key: Key('empty_message'),
+                      ),
+                    );
+                  }
+                },
+              ),
               _buildSubHeading(
                 title: 'Top Rated',
                 onTap: () =>
                     Navigator.pushNamed(context, TopRatedTVPage.ROUTE_NAME),
               ),
-              Consumer<TVListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedTVShowsState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return TVList(data.topRatedTVShows);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              BlocBuilder<TvTopRatedBloc, TvTopRatedState>(
+                builder: (context, state) {
+                  if (state is TvTopRatedLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is TvTopRatedHasData) {
+                    final listTv = state.result;
+                    return SizedBox(
+                      height: 200,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final tv = listTv[index];
+                          return TVList(
+                            key: Key('top_rated_$index'),
+                            tv: tv,
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                TVDetailPage.ROUTE_NAME,
+                                arguments: tv.id,
+                              );
+                            },
+                          );
+                        },
+                        itemCount: listTv.length,
+                      ),
+                    );
+                  } else if (state is TvTopRatedError) {
+                    return Center(
+                      child: Text(
+                        state.message,
+                        key: Key('error_message'),
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: Text(
+                        'There are no tv top rated showing',
+                        key: Key('empty_message'),
+                      ),
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -169,42 +270,31 @@ class _HomeTvPageState extends State<HomeTvPage> {
 }
 
 class TVList extends StatelessWidget {
-  final List<TV> tvShows;
+  final TV tv;
+  final Function() onTap;
 
-  TVList(this.tvShows);
+  const TVList({
+    Key? key,
+    required this.tv,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          final tv = tvShows[index];
-          return Container(
-            padding: const EdgeInsets.all(8),
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TVDetailPage.ROUTE_NAME,
-                  arguments: tv.id,
-                );
-              },
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${tv.posterPath}',
-                  placeholder: (context, url) => Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-              ),
+      padding: const EdgeInsets.all(8),
+      child: InkWell(
+        onTap: onTap,
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+          child: CachedNetworkImage(
+            imageUrl: '$BASE_IMAGE_URL${tv.posterPath}',
+            placeholder: (context, url) => Center(
+              child: CircularProgressIndicator(),
             ),
-          );
-        },
-        itemCount: tvShows.length,
+            errorWidget: (context, url, error) => Icon(Icons.error),
+          ),
+        ),
       ),
     );
   }

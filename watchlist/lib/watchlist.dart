@@ -1,8 +1,11 @@
 library watchlist;
 
 export 'presentation/pages/watchlist_movies_page.dart';
-export 'presentation/provider/watchlist_movie_notifier.dart';
+//bloc
+export 'presentation/bloc/movies/movie_watchlist_bloc.dart';
+export 'presentation/bloc/tvShow/tv_watchlist_bloc.dart';
 
+//usecase
 export 'domain/usecases/movie_usecase/get_watchlist_movies.dart';
 export 'domain/usecases/movie_usecase/get_watchlist_status.dart';
 export 'domain/usecases/movie_usecase/remove_watchlist.dart';

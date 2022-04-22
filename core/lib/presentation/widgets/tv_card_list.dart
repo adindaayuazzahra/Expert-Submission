@@ -4,22 +4,22 @@ import 'package:tv/tv.dart';
 import 'package:flutter/material.dart';
 
 class TVCard extends StatelessWidget {
-  final TV movie;
-
-  TVCard(this.movie);
+  final TV tv;
+  //final bool isWatchlist;
+  final Function() onTap;
+  const TVCard({
+    Key? key,
+    required this.tv,
+    //required this.isWatchlist,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            TVDetailPage.ROUTE_NAME,
-            arguments: movie.id,
-          );
-        },
+        onTap: onTap,
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
@@ -33,15 +33,27 @@ class TVCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // isWatchlist
+                    //     ? Row(
+                    //         children: const [
+                    //           Icon(
+                    //             Icons.tv_outlined,
+                    //             size: 15,
+                    //           ),
+                    //           SizedBox(width: 8),
+                    //           Text('TV Show'),
+                    //         ],
+                    //       )
+                    //     : SizedBox(),
                     Text(
-                      movie.name ?? '-',
+                      tv.name ?? '-',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 8),
                     Text(
-                      movie.overview ?? '-',
+                      tv.overview ?? '-',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -56,7 +68,7 @@ class TVCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: '$BASE_IMAGE_URL${tv.posterPath}',
                   width: 80,
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),
