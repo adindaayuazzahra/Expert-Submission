@@ -22,6 +22,7 @@ dependencies:
   sqflite: ^2.0.0+3
   flutter_bloc: ^8.0.0-dev.1
   coverage: ^1.0.3
+  firebase_crashlytics: ^2.6.3
 
   watchlist:
     path: ../watchlist

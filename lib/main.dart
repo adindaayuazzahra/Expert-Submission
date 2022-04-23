@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:about/about.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:movie/movie.dart';
 import 'package:watchlist/watchlist.dart';
 import 'package:search/search.dart';
@@ -11,7 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   di.init();
   runApp(MyApp());
 }

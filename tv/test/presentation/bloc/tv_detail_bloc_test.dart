@@ -24,24 +24,7 @@ void main() {
   });
 
   blocTest<TvDetailBloc, TvDetailState>(
-    'should emit [Loading, HasData] when data is gotten successfully',
-    build: () {
-      when(usecase.execute(tId)).thenAnswer((_) async => Right(testTVDetail));
-      return tvBloc;
-    },
-    act: (bloc) => bloc.add(OnTvDetailCalled(tId)),
-    expect: () => [
-      TvDetailLoading(),
-      TvDetailHasData(testTVDetail),
-    ],
-    verify: (bloc) {
-      verify(usecase.execute(tId));
-      return OnTvDetailCalled(tId).props;
-    },
-  );
-
-  blocTest<TvDetailBloc, TvDetailState>(
-    'should emit [Loading, Error] when get data is unsuccessful',
+    'should emit Loading state and then Error state when data failed to fetch',
     build: () {
       when(usecase.execute(tId))
           .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
@@ -54,4 +37,36 @@ void main() {
     ],
     verify: (bloc) => TvDetailLoading(),
   );
+
+  // blocTest<TvDetailBloc, TvDetailState>(
+  //   'should emit [Loading, HasData] when data is gotten successfully',
+  //   build: () {
+  //     when(usecase.execute(tId)).thenAnswer((_) async => Right(testTVDetail));
+  //     return tvBloc;
+  //   },
+  //   act: (bloc) => bloc.add(OnTvDetailCalled(tId)),
+  //   expect: () => [
+  //     TvDetailLoading(),
+  //     TvDetailHasData(testTVDetail),
+  //   ],
+  //   verify: (bloc) {
+  //     verify(usecase.execute(tId));
+  //     return OnTvDetailCalled(tId).props;
+  //   },
+  // );
+
+  // blocTest<TvDetailBloc, TvDetailState>(
+  //   'should emit [Loading, Error] when get data is unsuccessful',
+  //   build: () {
+  //     when(usecase.execute(tId))
+  //         .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+  //     return tvBloc;
+  //   },
+  //   act: (bloc) => bloc.add(OnTvDetailCalled(tId)),
+  //   expect: () => [
+  //     TvDetailLoading(),
+  //     TvDetailError('Server Failure'),
+  //   ],
+  //   verify: (bloc) => TvDetailLoading(),
+  // );
 }
