@@ -47,9 +47,9 @@ class SearchPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 15),
                 Container(
-                  height: 540,
+                  height: MediaQuery.of(context).size.height / 1.4,
                   child: TabBarView(
                     children: <Widget>[
                       //movie
@@ -69,7 +69,7 @@ class SearchPage extends StatelessWidget {
                             ),
                             textInputAction: TextInputAction.search,
                           ),
-                          SizedBox(height: 16),
+                          SizedBox(height: 15),
                           BlocBuilder<SearchMoviesBloc, SearchMoviesState>(
                             builder: (context, state) {
                               if (state is SearchMoviesLoading) {
@@ -196,16 +196,6 @@ class SearchPage extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // Text(
-                //   'Search Result Movie',
-                //   style: kHeading6,
-                // ),
-                // SizedBox(height: 20),
-                // Text(
-                //   'Search Result TV Shows',
-                //   style: kHeading6,
-                // ),
               ],
             ),
           ),

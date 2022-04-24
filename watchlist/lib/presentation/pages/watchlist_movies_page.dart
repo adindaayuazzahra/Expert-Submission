@@ -73,9 +73,9 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               SizedBox(
-                height: 530,
+                height: MediaQuery.of(context).size.height / 1.4,
                 child: TabBarView(
                   children: [
                     //movie
