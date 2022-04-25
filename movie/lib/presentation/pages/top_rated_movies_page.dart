@@ -42,7 +42,6 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
                   return MovieCard(
                     key: Key('card_$index'),
                     movie: movie,
-                    //isWatchlist: false,
                     onTap: () {
                       Navigator.pushNamed(
                         context,

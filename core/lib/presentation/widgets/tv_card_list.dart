@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 
 class TVCard extends StatelessWidget {
   final TV tv;
-  //final bool isWatchlist;
   final Function() onTap;
   const TVCard({
     Key? key,
     required this.tv,
-    //required this.isWatchlist,
     required this.onTap,
   }) : super(key: key);
 
@@ -33,18 +31,6 @@ class TVCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // isWatchlist
-                    //     ? Row(
-                    //         children: const [
-                    //           Icon(
-                    //             Icons.tv_outlined,
-                    //             size: 15,
-                    //           ),
-                    //           SizedBox(width: 8),
-                    //           Text('TV Show'),
-                    //         ],
-                    //       )
-                    //     : SizedBox(),
                     Text(
                       tv.name ?? '-',
                       maxLines: 1,

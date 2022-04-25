@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
-  //final bool isWatchlist;
   final Function() onTap;
   const MovieCard({
     Key? key,
     required this.movie,
-    //required this.isWatchlist,
     required this.onTap,
   }) : super(key: key);
 
@@ -33,18 +31,6 @@ class MovieCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // isWatchlist
-                    //     ? Row(
-                    //         children: const [
-                    //           Icon(
-                    //             Icons.movie_outlined,
-                    //             size: 15,
-                    //           ),
-                    //           SizedBox(width: 8),
-                    //           Text('Movies'),
-                    //         ],
-                    //       )
-                    //     : SizedBox(),
                     Text(
                       movie.title ?? '-',
                       maxLines: 1,

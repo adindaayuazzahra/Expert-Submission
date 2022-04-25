@@ -97,7 +97,6 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                                     return MovieCard(
                                       key: Key('movie_card_$index'),
                                       movie: movie,
-                                      //isWatchlist: true,
                                       onTap: () {
                                         Navigator.pushNamed(
                                           context,
@@ -144,7 +143,6 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                                     return TVCard(
                                       key: Key('tv_card_$index'),
                                       tv: tv,
-                                      //isWatchlist: true,
                                       onTap: () {
                                         Navigator.pushNamed(
                                           context,

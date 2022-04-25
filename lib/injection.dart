@@ -29,67 +29,6 @@ void init() {
       locator(),
     ),
   );
-  // provider
-  // locator.registerFactory(
-  //   () => MovieListNotifier(
-  //     getNowPlayingMovies: locator(),
-  //     getPopularMovies: locator(),
-  //     getTopRatedMovies: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => MovieDetailNotifier(
-  //     getMovieDetail: locator(),
-  //     getMovieRecommendations: locator(),
-  //     getWatchListStatus: locator(),
-  //     saveWatchlist: locator(),
-  //     removeWatchlist: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => PopularMoviesNotifier(
-  //     locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => TopRatedMoviesNotifier(
-  //     getTopRatedMovies: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => WatchlistMovieNotifier(
-  //     getWatchlistMovies: locator(),
-  //     getWatchListTVShow: locator(),
-  //   ),
-  // );
-
-  // locator.registerFactory(
-  //   () => TVListNotifier(
-  //     getTVOnTheAir: locator(),
-  //     getPopularTVShows: locator(),
-  //     getTopRatedTVShows: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => PopularTVNotifier(
-  //     locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => TVDetailNotifier(
-  //     getTVDetail: locator(),
-  //     getTVRecommendations: locator(),
-  //     getWatchListTVStatus: locator(),
-  //     saveTVWatchlist: locator(),
-  //     removeTVWatchlist: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => TopRatedTVNotifier(
-  //     getTopRatedTVShows: locator(),
-  //   ),
-  // );
-
   //tv bloc
   locator.registerFactory(() => TvListBloc(locator()));
   locator.registerFactory(() => TvDetailBloc(locator()));
