@@ -9,6 +9,8 @@ import 'package:watchlist/watchlist.dart';
 import 'package:flutter/material.dart';
 
 class HomeTvPage extends StatefulWidget {
+  const HomeTvPage({Key? key}) : super(key: key);
+
   @override
   _HomeTvPageState createState() => _HomeTvPageState();
 }
@@ -85,6 +87,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
+          key: Key('this_is_home_tv'),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -142,6 +145,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
                 title: 'Popular',
                 onTap: () =>
                     Navigator.pushNamed(context, PopularTVPage.ROUTE_NAME),
+                key: ('see_more_popular'),
               ),
               BlocBuilder<TvPopularBloc, TvPopularState>(
                 builder: (context, state) {
@@ -190,10 +194,11 @@ class _HomeTvPageState extends State<HomeTvPage> {
                 },
               ),
               _buildSubHeading(
-                title: 'Top Rated',
-                onTap: () =>
-                    Navigator.pushNamed(context, TopRatedTVPage.ROUTE_NAME),
-              ),
+                  title: 'Top Rated',
+                  onTap: () {
+                    Navigator.pushNamed(context, PopularTVPage.ROUTE_NAME);
+                  },
+                  key: 'see_more_top_rated'),
               BlocBuilder<TvTopRatedBloc, TvTopRatedState>(
                 builder: (context, state) {
                   if (state is TvTopRatedLoading) {
@@ -247,7 +252,11 @@ class _HomeTvPageState extends State<HomeTvPage> {
     );
   }
 
-  Row _buildSubHeading({required String title, required Function() onTap}) {
+  Row _buildSubHeading({
+    required String title,
+    required Function() onTap,
+    required String key,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -260,7 +269,8 @@ class _HomeTvPageState extends State<HomeTvPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
+              key: Key(key),
+              children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
             ),
           ),
         ),

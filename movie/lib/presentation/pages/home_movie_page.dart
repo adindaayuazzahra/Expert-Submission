@@ -87,6 +87,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
+          key: Key('this_is_home_movie'),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -141,10 +142,10 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 },
               ),
               _buildSubHeading(
-                title: 'Popular',
-                onTap: () =>
-                    Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
-              ),
+                  title: 'Popular',
+                  onTap: () => Navigator.pushNamed(
+                      context, PopularMoviesPage.ROUTE_NAME),
+                  key: Key('see_more_popular')),
               BlocBuilder<MoviePopularBloc, MoviePopularState>(
                 builder: (context, state) {
                   if (state is MoviePopularLoading) {
@@ -195,6 +196,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 title: 'Top Rated',
                 onTap: () =>
                     Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
+                key: Key('see_more_top_rated'),
               ),
               BlocBuilder<MovieTopRatedBloc, MovieTopRatedState>(
                 builder: (context, state) {
@@ -249,7 +251,11 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
     );
   }
 
-  Row _buildSubHeading({required String title, required Function() onTap}) {
+  Row _buildSubHeading({
+    required String title,
+    required Function() onTap,
+    required Key key,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -258,11 +264,12 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
           style: kHeading6,
         ),
         InkWell(
+          key: key,
           onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
+              children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
             ),
           ),
         ),
